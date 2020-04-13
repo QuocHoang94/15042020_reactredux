@@ -33,6 +33,7 @@ export class ListTodo extends Component {
       .catch(error => console.log(error))
   }
   getData = () => {
+    debugger
     // vong lap chay 2 lan neu khong return se bị lỗi khi get property objectFilter[0].listdata
     if (this.props.allUser.length === 0) { return }
     //chặn xuất 2 lần
@@ -44,7 +45,7 @@ export class ListTodo extends Component {
     checkExisted = this.props.allUser.some(ex => ex.id === userId);
     if (!checkExisted) { console.log('fail') }
     if (objectFilter.length === 0) { return }
-    if (objectFilter[0].listdata === null) { return }
+    // if (objectFilter[0].listdata === null) { return }
     // console.log(objectFilter[0].listdata);
     axios.get('http://localhost:3000/listtodo')
       .then(response => {
