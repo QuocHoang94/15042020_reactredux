@@ -356,3 +356,9 @@ th.titleoflistuser{
 	font-size: 30px;
 	font-family: 'Baloo Paaji 2', cursive;
 }
+.sort_selected {
+	border-bottom: solid;
+    display: inline-block;
+    height: 11px;
+    padding: 0px 33px;
+}

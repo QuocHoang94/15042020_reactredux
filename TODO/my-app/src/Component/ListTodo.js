@@ -13,8 +13,12 @@ export class ListTodo extends Component {
       id: '',
       userid: '',
       todo: '',
-      checkShowAllUser: false
+      checkShowAllUser: false,
+      checklist:true
     }
+  }
+  componentWillMount(){
+    this.props.alertOn('you have successfully logged in');
   }
   isChange = (event) => {
     const name = event.target.name;
@@ -33,7 +37,6 @@ export class ListTodo extends Component {
       .catch(error => console.log(error))
   }
   getData = () => {
-    debugger
     // vong lap chay 2 lan neu khong return se bị lỗi khi get property objectFilter[0].listdata
     if (this.props.allUser.length === 0) { return }
     //chặn xuất 2 lần
@@ -70,6 +73,7 @@ export class ListTodo extends Component {
         console.log(res);
         console.log(res.data);
       })
+    this.props.alertOn('Add to database is successful');
   }
   allUser = () => {
     this.setState({
@@ -84,6 +88,9 @@ export class ListTodo extends Component {
   mytitle = () => {
     return this.props.myuserTitle;
   }
+  checkFunction = (id)=>{
+    alert(id)
+  }
   render() {
     { this.getData(); }
     return (
@@ -95,7 +102,7 @@ export class ListTodo extends Component {
             <th><a href="http://localhost:3001/"><i className="far fa-times-circle"></i></a></th>
           </tr>
           <tr>
-            <td>
+            <td className="btn-group">
               <input
                 name='todotask'
                 type="email"
@@ -105,11 +112,12 @@ export class ListTodo extends Component {
                 placeholder="Add Task"
                 onChange={(event) => this.isChange(event)}
               />
+              <button type="reset" className="btn btn-info" onClick={() => this.getInputAdd(this.state.todotask)}><i className="fas fa-plus"></i></button>
             </td>
-            <td>
+            {/* <td>
               <button type="reset" className="btn btn-info" onClick={() => this.getInputAdd(this.state.todotask)}><i className="fas fa-plus"></i></button>
 
-            </td>
+            </td> */}
             {/* get list user */}
             <td>
               <button className="btn btn-outline-dark" onClick={() => this.allUser()}><i class="fas fa-users"></i></button>
@@ -155,7 +163,13 @@ export class ListTodo extends Component {
           {
 
             this.props.listdataob.map((value, key) => (
-              <ValueTitleList key={key} valueTitle={value.todo}></ValueTitleList>
+              <ValueTitleList key={key} valueTitle={value.todo} classname={this.state.checklist === true ? '': 'sort_selected'} clickToolbar = {(event)=>{
+                switch(this.state.checklist){
+                  case true:
+                     this.checkFunction(value.id); 
+                    break
+                }
+              }}></ValueTitleList>
             ))
           }
         </tbody>
@@ -184,6 +198,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     getUsersetclient: (useroftitles) => {
       dispatch({ type: "GET_NAME_USER", useroftitles })
+    },
+    alertOn:(alertcontent)=>{
+      dispatch({ type: "ALERT_ON",alertcontent })
+    },
+    alertOff:()=>{
+      dispatch({ type: "ALERT_OFF" })
     }
   }
 }
