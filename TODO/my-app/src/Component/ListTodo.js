@@ -89,7 +89,7 @@ export class ListTodo extends Component {
     return this.props.myuserTitle;
   }
   checkFunction = (id)=>{
-    alert(id)
+    
   }
   render() {
     { this.getData(); }
