@@ -28,6 +28,7 @@ export class ListUsername extends Component {
                 this.props.getIdprameter(myUsername[0].id);
                 // change page by window.location.href
                 window.location.href = `/listtodo/`+myUsername[0].id;
+                // window.open(`/listtodo/`+myUsername[0].id);
             })
             .catch(error => console.log(error))
         
